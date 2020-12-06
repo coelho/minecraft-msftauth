@@ -1,0 +1,53 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+application {
+    mainClassName = 'coelho.msftauth.MsftAuth'
+}
+
+configurations {
+    provided
+    shadow
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src'
+        }
+    }
+    main { compileClasspath += configurations.provided }
+    main { compileClasspath += configurations.shadow }
+}
+
+jar {
+    version = null
+    from { configurations.shadow.collect { it.isDirectory() ? it : zipTree(it) } }
+    manifest {
+        attributes(
+            'Main-Class': application.mainClassName
+        )
+    }
+}
+
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile group: 'com.google.guava', name: 'guava', version: '30.0-jre'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+
+    shadow group: 'com.google.guava', name: 'guava', version: '30.0-jre'
+    shadow group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    shadow group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
+}
