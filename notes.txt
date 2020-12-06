@@ -10,3 +10,7 @@
     - This can be used to send a "OAuth20TokenRequestByRefresh" payload to retrieve a new token
         - From there I'm assuming we can retrieve an XBL token again through the same process
         - Tokens expire in 1 day, so we need to do this often.
+
+- Token sign out needs to be implemented
+    - Not possible to currently invalidate a token
+
