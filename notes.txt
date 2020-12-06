@@ -14,3 +14,7 @@
 - Token sign out needs to be implemented
     - Not possible to currently invalidate a token
 
+- AuthWebView is a singleton
+    - It doesn't support authing multiple times in one process properly
+        - This is because I do not know how the current client is using JavaFX
+    - Needs to be fixed
