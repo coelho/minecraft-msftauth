@@ -41,7 +41,14 @@ public class Auther {
 			debug("oauth20Authorize", this.oauth20Authorize);
 
 			AuthWebView webView = AuthWebView.open(this.oauth20Authorize.getURL());
-			this.oauth20Desktop = new OAuth20Desktop(webView.waitForURL(OAuth20Util.REDIRECT_URI));
+			String webViewURL = webView.waitForURL(OAuth20Util.REDIRECT_URI);
+			if (webViewURL == null) {
+				debug("oauth20Desktop", "cancelled");
+				//process(); // test multiple sessions
+				return;
+			}
+
+			this.oauth20Desktop = new OAuth20Desktop(webViewURL);
 			debug("oauth20Desktop", this.oauth20Desktop);
 
 			this.oauth20Token = new OAuth20TokenRequestByCode(this.vars.getClientId(), this.oauth20Desktop.getCode(), this.vars.getScope()).request();
