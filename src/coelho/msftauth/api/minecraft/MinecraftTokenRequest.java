@@ -3,10 +3,12 @@ package coelho.msftauth.api.minecraft;
 import coelho.msftauth.api.APIEncoding;
 import coelho.msftauth.api.APIRequest;
 import coelho.msftauth.api.xbox.XboxToken;
+import com.google.gson.annotations.SerializedName;
 
 public class MinecraftTokenRequest extends APIRequest<MinecraftToken> {
 
 	private transient XboxToken token;
+	@SerializedName("identityToken")
 	private String identityToken;
 
 	public MinecraftTokenRequest(XboxToken token) {

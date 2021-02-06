@@ -9,6 +9,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.awt.*;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -45,6 +46,7 @@ public class AuthWebView extends Application {
 
 	@Override
 	public void start(Stage stage) {
+		Platform.setImplicitExit(false);
 		this.stage = stage;
 		this.web = new WebView();
 		this.web.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
@@ -71,6 +73,7 @@ public class AuthWebView extends Application {
 		this.urls.clear();
 		Platform.runLater(() -> {
 			this.urls.clear();
+			java.net.CookieHandler.setDefault(new com.sun.webkit.network.CookieManager());
 			this.web.getEngine().load(url);
 			this.stage.show();
 		});
@@ -84,7 +87,7 @@ public class AuthWebView extends Application {
 				return null; // cancelled
 			}
 			if (url.startsWith(urlPrefix)) {
-				Platform.runLater(this.stage::close);
+				Platform.runLater(this.stage::hide);
 				return url;
 			}
 		}

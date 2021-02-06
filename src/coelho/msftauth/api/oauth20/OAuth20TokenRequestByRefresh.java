@@ -14,6 +14,7 @@ public class OAuth20TokenRequestByRefresh extends APIRequest<OAuth20Token> {
 	private String grantType;
 	@SerializedName("redirect_uri")
 	private String redirectURI;
+	@SerializedName("scope")
 	private String scope;
 
 	public OAuth20TokenRequestByRefresh(String clientId, String refreshToken, String scope) {

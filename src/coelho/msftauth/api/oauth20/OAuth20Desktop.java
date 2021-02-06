@@ -11,6 +11,7 @@ import java.util.List;
 
 public class OAuth20Desktop {
 
+	private String status;
 	private String code;
 	private String lc;
 
@@ -19,6 +20,9 @@ public class OAuth20Desktop {
 		List<NameValuePair> queryParams = URLEncodedUtils.parse(url.getQuery(), StandardCharsets.UTF_8);
 		for (NameValuePair queryParam : queryParams) {
 			switch (queryParam.getName()) {
+				case "status":
+					this.status = queryParam.getValue();
+					break;
 				case "code":
 					this.code = queryParam.getValue();
 					break;
@@ -27,7 +31,11 @@ public class OAuth20Desktop {
 					break;
 			}
 		}
-		Preconditions.checkNotNull(this.code);
+		Preconditions.checkState(this.status != null || this.code != null, urlString);
+	}
+
+	public String getStatus() {
+		return this.status;
 	}
 
 	public String getCode() {

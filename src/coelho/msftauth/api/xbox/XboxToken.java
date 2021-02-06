@@ -1,8 +1,9 @@
 package coelho.msftauth.api.xbox;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
 import java.util.Map;
 
 public class XboxToken {
@@ -14,9 +15,9 @@ public class XboxToken {
 	@SerializedName("Token")
 	private String token;
 	@SerializedName("DisplayClaims")
-	private Map<String, List<Map<String, String>>> displayClaims;
+	private Map<String, JsonElement> displayClaims;
 
-	public XboxToken(String issueInstant, String notAfter, String token, Map<String, List<Map<String, String>>> displayClaims) {
+	public XboxToken(String issueInstant, String notAfter, String token, Map<String, JsonElement> displayClaims) {
 		this.issueInstant = issueInstant;
 		this.notAfter = notAfter;
 		this.token = token;
@@ -35,12 +36,18 @@ public class XboxToken {
 		return this.token;
 	}
 
-	public Map<String, List<Map<String, String>>> getDisplayClaims() {
+	public Map<String, JsonElement> getDisplayClaims() {
 		return this.displayClaims;
 	}
 
 	public String toIdentityToken() {
-		return "XBL3.0 x=" + this.displayClaims.get("xui").get(0).get("uhs") + ";" + this.token;
+		return "XBL3.0 x=" + this.displayClaims
+				.get("xui")
+				.getAsJsonArray()
+				.get(0)
+				.getAsJsonObject()
+				.get("uhs")
+				.getAsString() + ";" + this.token;
 	}
 
 }

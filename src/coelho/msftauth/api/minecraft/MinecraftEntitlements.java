@@ -9,7 +9,9 @@ public class MinecraftEntitlements {
 
 	@SerializedName("items")
 	private List<MinecraftEntitlements> all;
+	@SerializedName("signature")
 	private String signature;
+	@SerializedName("keyId")
 	private String keyId;
 
 	public MinecraftEntitlements(List<MinecraftEntitlements> all, String signature, String keyId) {

@@ -1,5 +1,7 @@
 package coelho.msftauth.api;
 
+import com.google.common.io.CharStreams;
+import org.apache.http.HttpRequest;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -7,6 +9,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import java.nio.charset.StandardCharsets;
 
 public abstract class APIRequest<R> {
 
@@ -28,13 +33,27 @@ public abstract class APIRequest<R> {
 			if (this.getHttpAuthorization() != null) {
 				request.setHeader("Authorization", this.getHttpAuthorization());
 			}
+			this.applyHeader(request);
+
 			try (CloseableHttpResponse response = client.execute(request)) {
 				if (response.getStatusLine().getStatusCode() != 200) {
+					try {
+						System.out.println(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+					} catch (Exception ignore) {
+					}
 					throw new IllegalStateException("status code: " + response.getStatusLine().getStatusCode());
 				}
-				return this.getResponseEncoding().decode(response, this.getResponseClass());
+				R decoded = this.getResponseEncoding().decode(response, this.getResponseClass());
+				if (decoded instanceof APIResponseExt) {
+					((APIResponseExt) decoded).applyResponse(response);
+				}
+				return decoded;
 			}
 		}
+	}
+
+	public void applyHeader(HttpRequest request) {
+
 	}
 
 	public abstract String getHttpURL();

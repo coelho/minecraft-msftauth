@@ -6,9 +6,13 @@ public class MinecraftProfileSkin {
 
 	@SerializedName("id")
 	private String uuid;
+	@SerializedName("alias")
 	private String alias;
+	@SerializedName("state")
 	private String state;
+	@SerializedName("url")
 	private String url;
+	@SerializedName("variant")
 	private String variant;
 
 	public MinecraftProfileSkin(String uuid, String alias, String state, String url, String variant) {

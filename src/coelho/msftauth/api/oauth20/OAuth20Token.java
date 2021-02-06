@@ -8,6 +8,7 @@ public class OAuth20Token {
 	private String tokenType;
 	@SerializedName("expires_in")
 	private long expiresIn;
+	@SerializedName("scope")
 	private String scope;
 	@SerializedName("access_token")
 	private String accessToken;
@@ -15,6 +16,7 @@ public class OAuth20Token {
 	private String refreshToken;
 	@SerializedName("user_id")
 	private String userId;
+	@SerializedName("foci")
 	private String foci;
 
 	public OAuth20Token(String tokenType, long expiresIn, String scope, String accessToken, String refreshToken, String userId, String foci) {

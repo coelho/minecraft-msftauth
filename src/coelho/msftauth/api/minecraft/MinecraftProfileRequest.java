@@ -2,9 +2,11 @@ package coelho.msftauth.api.minecraft;
 
 import coelho.msftauth.api.APIEncoding;
 import coelho.msftauth.api.APIRequest;
+import com.google.gson.annotations.SerializedName;
 
 public class MinecraftProfileRequest extends APIRequest<MinecraftProfile> {
 
+	@SerializedName("token")
 	private MinecraftToken token;
 
 	public MinecraftProfileRequest(MinecraftToken token) {

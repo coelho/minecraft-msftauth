@@ -8,16 +8,21 @@ public class OAuth20TokenRequestByCode extends APIRequest<OAuth20Token> {
 
 	@SerializedName("client_id")
 	private String clientId;
+	@SerializedName("code")
 	private String code;
+	@SerializedName("code_verifier")
+	private String codeVerifier;
 	@SerializedName("grant_type")
 	private String grantType;
 	@SerializedName("redirect_uri")
 	private String redirectURI;
+	@SerializedName("scope")
 	private String scope;
 
-	public OAuth20TokenRequestByCode(String clientId, String code, String scope) {
+	public OAuth20TokenRequestByCode(String clientId, String code, String codeVerifier, String scope) {
 		this.clientId = clientId;
 		this.code = code;
+		this.codeVerifier = codeVerifier;
 		this.grantType = "authorization_code";
 		this.redirectURI = OAuth20Util.REDIRECT_URI;
 		this.scope = scope;
@@ -29,6 +34,10 @@ public class OAuth20TokenRequestByCode extends APIRequest<OAuth20Token> {
 
 	public String getCode() {
 		return this.code;
+	}
+
+	public String getCodeVerifier() {
+		return this.codeVerifier;
 	}
 
 	public String getGrantType() {

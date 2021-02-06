@@ -1,6 +1,7 @@
 package coelho.msftauth.api;
 
 import coelho.msftauth.util.GsonUtil;
+import com.google.common.io.CharStreams;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

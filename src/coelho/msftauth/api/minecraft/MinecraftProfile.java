@@ -9,7 +9,9 @@ public class MinecraftProfile {
 
 	@SerializedName("id")
 	private String uuid;
+	@SerializedName("name")
 	private String name;
+	@SerializedName("skins")
 	private List<MinecraftProfileSkin> skins;
 
 	public MinecraftProfile(String uuid, String name, List<MinecraftProfileSkin> skins) {
